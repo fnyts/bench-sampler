@@ -6,8 +6,16 @@
 #include <fstream>
 #include <string>
 
+#include "TestAssert.h"
+
 namespace
 {
+void runTest (const char* name, void (*test)())
+{
+    sampleBenchTestLog (name);
+    test();
+}
+
 void testPackStartsWithFourSamplerBuckets()
 {
     auto pack = samplebench::Pack::create ("EP133_BREAKS_01");
@@ -524,32 +532,34 @@ void testResetPluginPathsRestoresPlatformDefaults()
 
 int main()
 {
-    testPackStartsWithFourSamplerBuckets();
-    testImportAddsAudioFileToRequestedBucket();
-    testPackReportsWhetherItHasImportedSamples();
-    testSelectingSampleMakesItAvailableForBenchView();
-    testClearingSelectionLeavesBenchWithoutSample();
-    testMovingSampleToBucketUpdatesBucketMembership();
-    testMovingSelectedSampleKeepsSelectionValid();
-    testMovingSampleToSameBucketIsNoOpSuccess();
-    testMovingMissingSampleFails();
-    testPackSessionPersistsAndReloads();
-    testPackRenameChangesDisplayName();
-    testPackRenameRejectsEmptyName();
-    testSafeExportFolderNameSanitizesInvalidCharacters();
-    testPackExportCreatesBucketFoldersAndNotes();
-    testPackExportIncludesKeptBouncesOnly();
-    testPackExportNotesContainPackNameAndBucketSections();
-    testDuplicateExportFilenamesPreserveBpmLast();
-    testDefaultMacVst3PathsIncludeSystemAndUserLocations();
-    testDefaultWindowsVst3PathSuggestionIsCustomizable();
-    testPluginScanPathsIgnoreDuplicatesAndCanRemoveCustomPaths();
-    testPluginScanPathsPersistAndReload();
-    testFoundAndFailedPluginCachePersistsAndReloads();
-    testStartupLoadsPluginCacheWithoutScanning();
-    testChangingPluginScanPathsMarksRescanRecommended();
-    testClearPluginCachePreservesPaths();
-    testResetPluginPathsRestoresPlatformDefaults();
+    configureSampleBenchTestProcess();
+
+    runTest ("testPackStartsWithFourSamplerBuckets", testPackStartsWithFourSamplerBuckets);
+    runTest ("testImportAddsAudioFileToRequestedBucket", testImportAddsAudioFileToRequestedBucket);
+    runTest ("testPackReportsWhetherItHasImportedSamples", testPackReportsWhetherItHasImportedSamples);
+    runTest ("testSelectingSampleMakesItAvailableForBenchView", testSelectingSampleMakesItAvailableForBenchView);
+    runTest ("testClearingSelectionLeavesBenchWithoutSample", testClearingSelectionLeavesBenchWithoutSample);
+    runTest ("testMovingSampleToBucketUpdatesBucketMembership", testMovingSampleToBucketUpdatesBucketMembership);
+    runTest ("testMovingSelectedSampleKeepsSelectionValid", testMovingSelectedSampleKeepsSelectionValid);
+    runTest ("testMovingSampleToSameBucketIsNoOpSuccess", testMovingSampleToSameBucketIsNoOpSuccess);
+    runTest ("testMovingMissingSampleFails", testMovingMissingSampleFails);
+    runTest ("testPackSessionPersistsAndReloads", testPackSessionPersistsAndReloads);
+    runTest ("testPackRenameChangesDisplayName", testPackRenameChangesDisplayName);
+    runTest ("testPackRenameRejectsEmptyName", testPackRenameRejectsEmptyName);
+    runTest ("testSafeExportFolderNameSanitizesInvalidCharacters", testSafeExportFolderNameSanitizesInvalidCharacters);
+    runTest ("testPackExportCreatesBucketFoldersAndNotes", testPackExportCreatesBucketFoldersAndNotes);
+    runTest ("testPackExportIncludesKeptBouncesOnly", testPackExportIncludesKeptBouncesOnly);
+    runTest ("testPackExportNotesContainPackNameAndBucketSections", testPackExportNotesContainPackNameAndBucketSections);
+    runTest ("testDuplicateExportFilenamesPreserveBpmLast", testDuplicateExportFilenamesPreserveBpmLast);
+    runTest ("testDefaultMacVst3PathsIncludeSystemAndUserLocations", testDefaultMacVst3PathsIncludeSystemAndUserLocations);
+    runTest ("testDefaultWindowsVst3PathSuggestionIsCustomizable", testDefaultWindowsVst3PathSuggestionIsCustomizable);
+    runTest ("testPluginScanPathsIgnoreDuplicatesAndCanRemoveCustomPaths", testPluginScanPathsIgnoreDuplicatesAndCanRemoveCustomPaths);
+    runTest ("testPluginScanPathsPersistAndReload", testPluginScanPathsPersistAndReload);
+    runTest ("testFoundAndFailedPluginCachePersistsAndReloads", testFoundAndFailedPluginCachePersistsAndReloads);
+    runTest ("testStartupLoadsPluginCacheWithoutScanning", testStartupLoadsPluginCacheWithoutScanning);
+    runTest ("testChangingPluginScanPathsMarksRescanRecommended", testChangingPluginScanPathsMarksRescanRecommended);
+    runTest ("testClearPluginCachePreservesPaths", testClearPluginCachePreservesPaths);
+    runTest ("testResetPluginPathsRestoresPlatformDefaults", testResetPluginPathsRestoresPlatformDefaults);
 
     std::cout << "SampleBenchModelTests passed\n";
     return 0;

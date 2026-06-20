@@ -6,8 +6,16 @@
 #include <string>
 #include <vector>
 
+#include "TestAssert.h"
+
 namespace
 {
+void runTest (const char* name, void (*test)())
+{
+    sampleBenchTestLog (name);
+    test();
+}
+
 bool nearlyEqual (double first, double second)
 {
     return std::abs (first - second) < 0.0001;
@@ -924,67 +932,69 @@ void testLoopPositionWrapsAfterFxReload()
 
 int main()
 {
-    testFilenameBuilderNormalLoop();
-    testFilenameBuilderSpeedTrickLoop();
-    testSuggestsShortExportNameFromCymaticsLoop();
-    testSuggestsExportNameKeepsMeaningfulNumbers();
-    testExtractsBpmFromFilename();
-    testDetectsLoopFromFilename();
-    testDetectsOneShotFromFilename();
-    testMiddleTruncationPreservesBpmEnding();
-    testImportedCymaticsLoopGetsUsefulDefaults();
-    testImportedCymatics808LoopGetsUsefulDefaults();
-    testFilenameBuilderOneShotOmitsBpm();
-    testBpmIsLastForLoops();
-    testCaptureSettingsConvertsBarsToSeconds();
-    testWarmupIsExcludedFromExportedKeepRegion();
-    testStartBarMeansKeepStart();
-    testSourceLoopRegionEqualsKeepRegion();
-    testBounceLoopRegionEqualsBounceDuration();
-    testTailIncludedOnlyWhenTailIsEnabled();
-    testBedDurationFromBpmAndBarCount();
-    testLoopContinuouslyRepeatsMonoSourceToFillBed();
-    testOncePerBarPlacesMonoSourceAtEachBarStart();
-    testCaptureRegionCanSelectKeepFromGeneratedBed();
-    testFourBucketModelStillWorks();
-    testPlaybackStartsOneTargetAtATime();
-    testStopPlaybackClearsTargetButKeepsLoopPreference();
-    testLoopPreferenceDoesNotStartPlayback();
-    testPreviewTargetDefaultsToSource();
-    testPreviewTargetSelectionDoesNotStartPlayback();
-    testPlaybackUsesSelectedPreviewTarget();
-    testWaveformWindowShowsWholeShortFile();
-    testWaveformWindowCentersCaptureForLongFile();
-    testAutoFollowKeepsPlayheadVisible();
-    testAutoFollowDoesNotScrollWhenPlayheadVisible();
-    testWaveformTimelineIsNotShiftedByChannelLabel();
-    testGainEffectChangesAmplitude();
-    testMonoEffectAveragesStereoChannels();
-    testCrushEffectQuantizesAndHoldsSamples();
-    testCrushFullBlastMakesObviousAudioChange();
-    testFilterEffectProcessesAndChangesOutput();
-    testLimiterPreventsClipping();
-    testCompressorReducesLevelAboveThreshold();
-    testDriveChangesWaveformAndClampsSafely();
-    testEqLowMidHighAffectSignal();
-    testDelayProducesSyncedRepeatsFromBpm();
-    testDelayWithoutBpmDoesNotInventTiming();
-    testReverbProducesTail();
-    testTapeChangesSignalWithoutClipping();
-    testDisabledEffectsDoNotChangeAudio();
-    testEffectChainOrderIsStable();
-    testPluginModuleCanBeRepresentedInFxChain();
-    testPluginModuleStateBlobIsPreservedInBenchSettings();
-    testMissingPluginBecomesDisabledPlaceholder();
-    testBypassedPluginModuleIsSkippedByActivePluginList();
-    testFxMenuPutsPluginsInSubmenuBeforeBuiltIns();
-    testCustomEffectChainOrderChangesProcessingOrder();
-    testCustomEmptyEffectChainDisablesProcessing();
-    testBounceProcessingUsesNormalizeWhenEnabled();
-    testPreviewFxDetectionIgnoresRenderOnlyNormalize();
-    testFxDetailLayoutGivesKnobsVisibleSpace();
-    testFilterDetailLayoutStartsKnobsAtLeft();
-    testLoopPositionWrapsAfterFxReload();
+    configureSampleBenchTestProcess();
+
+    runTest ("testFilenameBuilderNormalLoop", testFilenameBuilderNormalLoop);
+    runTest ("testFilenameBuilderSpeedTrickLoop", testFilenameBuilderSpeedTrickLoop);
+    runTest ("testSuggestsShortExportNameFromCymaticsLoop", testSuggestsShortExportNameFromCymaticsLoop);
+    runTest ("testSuggestsExportNameKeepsMeaningfulNumbers", testSuggestsExportNameKeepsMeaningfulNumbers);
+    runTest ("testExtractsBpmFromFilename", testExtractsBpmFromFilename);
+    runTest ("testDetectsLoopFromFilename", testDetectsLoopFromFilename);
+    runTest ("testDetectsOneShotFromFilename", testDetectsOneShotFromFilename);
+    runTest ("testMiddleTruncationPreservesBpmEnding", testMiddleTruncationPreservesBpmEnding);
+    runTest ("testImportedCymaticsLoopGetsUsefulDefaults", testImportedCymaticsLoopGetsUsefulDefaults);
+    runTest ("testImportedCymatics808LoopGetsUsefulDefaults", testImportedCymatics808LoopGetsUsefulDefaults);
+    runTest ("testFilenameBuilderOneShotOmitsBpm", testFilenameBuilderOneShotOmitsBpm);
+    runTest ("testBpmIsLastForLoops", testBpmIsLastForLoops);
+    runTest ("testCaptureSettingsConvertsBarsToSeconds", testCaptureSettingsConvertsBarsToSeconds);
+    runTest ("testWarmupIsExcludedFromExportedKeepRegion", testWarmupIsExcludedFromExportedKeepRegion);
+    runTest ("testStartBarMeansKeepStart", testStartBarMeansKeepStart);
+    runTest ("testSourceLoopRegionEqualsKeepRegion", testSourceLoopRegionEqualsKeepRegion);
+    runTest ("testBounceLoopRegionEqualsBounceDuration", testBounceLoopRegionEqualsBounceDuration);
+    runTest ("testTailIncludedOnlyWhenTailIsEnabled", testTailIncludedOnlyWhenTailIsEnabled);
+    runTest ("testBedDurationFromBpmAndBarCount", testBedDurationFromBpmAndBarCount);
+    runTest ("testLoopContinuouslyRepeatsMonoSourceToFillBed", testLoopContinuouslyRepeatsMonoSourceToFillBed);
+    runTest ("testOncePerBarPlacesMonoSourceAtEachBarStart", testOncePerBarPlacesMonoSourceAtEachBarStart);
+    runTest ("testCaptureRegionCanSelectKeepFromGeneratedBed", testCaptureRegionCanSelectKeepFromGeneratedBed);
+    runTest ("testFourBucketModelStillWorks", testFourBucketModelStillWorks);
+    runTest ("testPlaybackStartsOneTargetAtATime", testPlaybackStartsOneTargetAtATime);
+    runTest ("testStopPlaybackClearsTargetButKeepsLoopPreference", testStopPlaybackClearsTargetButKeepsLoopPreference);
+    runTest ("testLoopPreferenceDoesNotStartPlayback", testLoopPreferenceDoesNotStartPlayback);
+    runTest ("testPreviewTargetDefaultsToSource", testPreviewTargetDefaultsToSource);
+    runTest ("testPreviewTargetSelectionDoesNotStartPlayback", testPreviewTargetSelectionDoesNotStartPlayback);
+    runTest ("testPlaybackUsesSelectedPreviewTarget", testPlaybackUsesSelectedPreviewTarget);
+    runTest ("testWaveformWindowShowsWholeShortFile", testWaveformWindowShowsWholeShortFile);
+    runTest ("testWaveformWindowCentersCaptureForLongFile", testWaveformWindowCentersCaptureForLongFile);
+    runTest ("testAutoFollowKeepsPlayheadVisible", testAutoFollowKeepsPlayheadVisible);
+    runTest ("testAutoFollowDoesNotScrollWhenPlayheadVisible", testAutoFollowDoesNotScrollWhenPlayheadVisible);
+    runTest ("testWaveformTimelineIsNotShiftedByChannelLabel", testWaveformTimelineIsNotShiftedByChannelLabel);
+    runTest ("testGainEffectChangesAmplitude", testGainEffectChangesAmplitude);
+    runTest ("testMonoEffectAveragesStereoChannels", testMonoEffectAveragesStereoChannels);
+    runTest ("testCrushEffectQuantizesAndHoldsSamples", testCrushEffectQuantizesAndHoldsSamples);
+    runTest ("testCrushFullBlastMakesObviousAudioChange", testCrushFullBlastMakesObviousAudioChange);
+    runTest ("testFilterEffectProcessesAndChangesOutput", testFilterEffectProcessesAndChangesOutput);
+    runTest ("testLimiterPreventsClipping", testLimiterPreventsClipping);
+    runTest ("testCompressorReducesLevelAboveThreshold", testCompressorReducesLevelAboveThreshold);
+    runTest ("testDriveChangesWaveformAndClampsSafely", testDriveChangesWaveformAndClampsSafely);
+    runTest ("testEqLowMidHighAffectSignal", testEqLowMidHighAffectSignal);
+    runTest ("testDelayProducesSyncedRepeatsFromBpm", testDelayProducesSyncedRepeatsFromBpm);
+    runTest ("testDelayWithoutBpmDoesNotInventTiming", testDelayWithoutBpmDoesNotInventTiming);
+    runTest ("testReverbProducesTail", testReverbProducesTail);
+    runTest ("testTapeChangesSignalWithoutClipping", testTapeChangesSignalWithoutClipping);
+    runTest ("testDisabledEffectsDoNotChangeAudio", testDisabledEffectsDoNotChangeAudio);
+    runTest ("testEffectChainOrderIsStable", testEffectChainOrderIsStable);
+    runTest ("testPluginModuleCanBeRepresentedInFxChain", testPluginModuleCanBeRepresentedInFxChain);
+    runTest ("testPluginModuleStateBlobIsPreservedInBenchSettings", testPluginModuleStateBlobIsPreservedInBenchSettings);
+    runTest ("testMissingPluginBecomesDisabledPlaceholder", testMissingPluginBecomesDisabledPlaceholder);
+    runTest ("testBypassedPluginModuleIsSkippedByActivePluginList", testBypassedPluginModuleIsSkippedByActivePluginList);
+    runTest ("testFxMenuPutsPluginsInSubmenuBeforeBuiltIns", testFxMenuPutsPluginsInSubmenuBeforeBuiltIns);
+    runTest ("testCustomEffectChainOrderChangesProcessingOrder", testCustomEffectChainOrderChangesProcessingOrder);
+    runTest ("testCustomEmptyEffectChainDisablesProcessing", testCustomEmptyEffectChainDisablesProcessing);
+    runTest ("testBounceProcessingUsesNormalizeWhenEnabled", testBounceProcessingUsesNormalizeWhenEnabled);
+    runTest ("testPreviewFxDetectionIgnoresRenderOnlyNormalize", testPreviewFxDetectionIgnoresRenderOnlyNormalize);
+    runTest ("testFxDetailLayoutGivesKnobsVisibleSpace", testFxDetailLayoutGivesKnobsVisibleSpace);
+    runTest ("testFilterDetailLayoutStartsKnobsAtLeft", testFilterDetailLayoutStartsKnobsAtLeft);
+    runTest ("testLoopPositionWrapsAfterFxReload", testLoopPositionWrapsAfterFxReload);
 
     std::cout << "BenchRenderModelTests passed\n";
     return 0;

@@ -3,6 +3,8 @@
 #include <cassert>
 #include <iostream>
 
+#include "TestAssert.h"
+
 namespace
 {
 void testTextColoursAreReadableOnPanel()
@@ -15,6 +17,8 @@ void testTextColoursAreReadableOnPanel()
 
 int main()
 {
+    configureSampleBenchTestProcess();
+
     testTextColoursAreReadableOnPanel();
 
     std::cout << "BenchPaletteTests passed\n";
