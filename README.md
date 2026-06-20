@@ -102,6 +102,7 @@ If JUCE is not installed locally, CMake fetches JUCE 8.0.6.
 
 - `src/model/`: portable pack/session/export/DSP model code
 - `src/app/`: JUCE desktop app, waveform view, plugin scanner, and bench UI
+- `resources/icons/`: app icon source PNG plus generated macOS/Windows icon assets
 - `tests/`: model, render, and palette tests
 
 ## Notes

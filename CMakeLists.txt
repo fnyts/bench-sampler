@@ -59,6 +59,8 @@ if(SAMPLE_BENCH_BUILD_APP)
         PRODUCT_NAME "Bench Sampler"
         COMPANY_NAME "Bench Sampler"
         BUNDLE_ID "com.samplerfoodbench.prototype"
+        ICON_BIG "${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/bench_sampler_icon.png"
+        ICON_SMALL "${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/bench_sampler_icon.png"
     )
 
     target_sources(SamplerFoodBench PRIVATE
